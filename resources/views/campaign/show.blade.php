@@ -45,7 +45,7 @@
 
                                     <div class="mb-2">
                                         <label>Nomor Handphone/WA</label>
-                                        <input required id="phoneNumber" type="number" class="form-control">
+                                        <input required id="phoneNumber" value="" type="number" class="form-control">
                                     </div>
 
                                     <button type="button" id="submit" class="btn btn-primary w-100 my-2 shadow"
@@ -62,11 +62,40 @@
         <!-- Request to backend with ajax -->
         <script type="text/javascript">
             function payment() {
-                var amount = document.getElementById("amount").value;
-                var email = document.getElementById("email").value;
-                var name = document.getElementById("name").value;
-                var phoneNumber = document.getElementById("phoneNumber").value;
+                var amount = $('#amount').val();
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var phoneNumber = $('#phoneNumber').val();
                 var paymentUi = "1";
+
+                if (amount < 10000) {
+                    alert("Minimal 10 ribu");
+                    $('#amount').focus();
+                    return false;
+                }
+
+                if (name.length === 0) {
+                    alert("Kolom Nama Lengkap wajib diisi");
+                    $('#name').focus();
+                    return false;
+                }
+
+                if (email.length === 0) {
+                    alert("Kolom Email wajib diisi");
+                    $('#email').focus();
+                    return false;
+                }
+
+                if ((phoneNumber.length < 10) || phoneNumber.length > 13) {
+                    alert("Nomor handphone minimal 10 digit maksimal 13 digit");
+                    $('#phoneNumber').focus();
+                    return false;
+                }
+
+                // Disable button
+                $("#submit").html("Memproses..");
+                $("#submit").prop('disabled', true);
+
                 $.ajax({
                     type: "POST",
                     data: {
@@ -93,18 +122,21 @@
                                 console.log('success');
                                 console.log(result);
                                 alert('Payment Success');
+                                location.reload();
                             },
                             pendingEvent: function(result) {
                                 // begin your code here
                                 console.log('pending');
                                 console.log(result);
                                 alert('Payment Pending');
+                                location.reload();
                             },
                             errorEvent: function(result) {
                                 // begin your code here
                                 console.log('error');
                                 console.log(result);
                                 alert('Payment Error');
+                                location.reload();
                             },
                             closeEvent: function(result) {
                                 // begin your code here
@@ -112,6 +144,7 @@
                                     'customer closed the popup without finishing the payment');
                                 console.log(result);
                                 alert('customer closed the popup without finishing the payment');
+                                location.reload();
                             }
                         });
 
