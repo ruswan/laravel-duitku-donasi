@@ -17,16 +17,16 @@ class CallbackController extends Controller
         try {
             $merchantCode = config('services.duitku.merchan_code');
             $apiKey = config('services.duitku.api_key');
-            $amount = $request->input('amount');
-            $merchantOrderId = $request->input('merchantOrderId');
-            $productDetail = $request->input('productDetail');
-            $additionalParam = $request->input('additionalParam');
-            $paymentMethod = $request->input('paymentCode');
-            $resultCode = $request->input('resultCode');
-            $merchantUserId = $request->input('merchantUserId');
-            $reference = $request->input('reference');
-            $signature = $request->input('signature');
-            $spUserHash = $request->input('spUserHash'); // Shopee only
+            $amount = $request->amount;
+            $merchantOrderId = $request->merchantOrderId;
+            $productDetail = $request->productDetail;
+            $additionalParam = $request->additionalParam;
+            $paymentMethod = $request->paymentCode;
+            $resultCode = $request->resultCode;
+            $merchantUserId = $request->merchantUserId;
+            $reference = $request->reference;
+            $signature = $request->signature;
+            $spUserHash = $request->spUserHash; // Shopee only
 
             if (!empty($merchantCode) && !empty($amount) && !empty($merchantOrderId) && !empty($signature)) {
                 $params = $merchantCode . $amount . $merchantOrderId . $apiKey;
@@ -106,9 +106,10 @@ class CallbackController extends Controller
         string $reference,
         ?string $additionalParam
     ): void {
-        $invoice = Donasi::where('code', $orderId)->first();
+        $invoice = Donasi::where('duitku_ref', $reference)->first();
         if (!$invoice) return;
         $invoice->paid = $amount;
+        $invoice->method = $paymentCode;
         $invoice->save();
     }
 
@@ -130,7 +131,7 @@ class CallbackController extends Controller
         string $reference,
         ?string $additionalParam
     ): void {
-        $invoice = Donasi::where('code', $orderId)->first();
+        $invoice = Donasi::where('duitku_ref', $reference)->first();
         if (!$invoice) return;
         /*
          * Transaction failed, just delete
