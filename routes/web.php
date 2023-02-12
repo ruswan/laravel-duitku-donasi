@@ -27,7 +27,4 @@ Route::get('/donasi', [DonasiController::class, 'index']);
 Route::get('/campaign/{campaign:slug}', [CampaignController::class, 'show'])->name('campaign.show');
 Route::post('/donasi/{campaign:slug}', [DonasiController::class, 'store'])->name('donasis.store');
 
-
-Route::post('callback/payment', [CallbackController::class, 'paymentCallback']);
-
-Route::get('callback/return', [CallbackController::class, 'myReturnCallback']);
+Route::get('callback/return', [CallbackController::class, 'ReturnCallback']);
