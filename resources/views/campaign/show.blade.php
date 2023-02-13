@@ -91,25 +91,41 @@
                 var paymentUi = "1";
 
                 if (amount < 10000) {
-                    alert("Minimal 10 ribu");
+                    Swal.fire(
+                        'Mohon maaf!',
+                        'Minimal donasi adalah Rp. 10.000,-',
+                        'error'
+                    )
                     $('#amount').focus();
                     return false;
                 }
 
                 if (name.length === 0) {
-                    alert("Kolom Nama Lengkap wajib diisi");
+                    Swal.fire(
+                        'Mohon maaf!',
+                        'Kolom Nama Lengkap wajib diisi',
+                        'error'
+                    )
                     $('#name').focus();
                     return false;
                 }
 
                 if (email.length === 0) {
-                    alert("Kolom Email wajib diisi");
+                    Swal.fire(
+                        'Mohon maaf!',
+                        'Kolom Email wajib diisi',
+                        'error'
+                    )
                     $('#email').focus();
                     return false;
                 }
 
                 if ((phoneNumber.length < 10) || phoneNumber.length > 13) {
-                    alert("Nomor handphone minimal 10 digit maksimal 13 digit");
+                    Swal.fire(
+                        'Mohon maaf!',
+                        'Nomor handphone minimal 10 digit maksimal 13 digit',
+                        'error'
+                    )
                     $('#phoneNumber').focus();
                     return false;
                 }
@@ -140,33 +156,38 @@
 
                         checkout.process(result.reference, {
                             successEvent: function(result) {
-                                // begin your code here
-                                console.log('success');
-                                console.log(result);
-                                alert('Payment Success');
+                                Swal.fire(
+                                    'Pembayaran Berhasil',
+                                    'Terimakasih, pembayar Anda berhasil, semoga menjadi amal jariyah.',
+                                    'success'
+                                )
                                 location.reload();
                             },
                             pendingEvent: function(result) {
-                                // begin your code here
-                                console.log('pending');
-                                console.log(result);
-                                alert('Payment Pending');
+                                Swal.fire(
+                                    'Pembayaran Pending',
+                                    'Maaf, pembayar Anda masih berstatus pending, silahkan lakukan pembayaran terlebih dahulu.',
+                                    'info'
+                                )
                                 location.reload();
                             },
                             errorEvent: function(result) {
-                                // begin your code here
-                                console.log('error');
-                                console.log(result);
-                                alert('Payment Error');
+                                Swal.fire(
+                                    'Pembayaran Gagal',
+                                    'Maaf, pembayar Anda gagal, silahkan diulangi kembali.',
+                                    'error'
+                                )
                                 location.reload();
                             },
                             closeEvent: function(result) {
-                                // begin your code here
-                                console.log(
-                                    'customer closed the popup without finishing the payment');
-                                console.log(result);
-                                alert('customer closed the popup without finishing the payment');
-                                location.reload();
+                                Swal.fire({
+                                    title: 'Donasi Gagal',
+                                    text: 'Maaf, sepertinya Anda menutup halaman sebelum menyelesaikan proses donasi.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                }).then((result) => {
+                                    location.reload();
+                                })
                             }
                         });
 
