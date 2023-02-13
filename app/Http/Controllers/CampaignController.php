@@ -46,7 +46,10 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        $campaign = Campaign::where('slug', $campaign->slug)->first();
+        $campaign = Campaign::with(['donasis' => function ($q) {
+            $q->alredyPaid();
+        }])->where('slug', $campaign->slug)->first();
+
         return view('campaign.show', compact('campaign'));
     }
 
