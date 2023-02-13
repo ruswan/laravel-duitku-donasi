@@ -21,6 +21,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+
     <!-- Custon CSS -->
     <link href="{{ url('css/app.css') }}" rel="stylesheet">
 
@@ -81,5 +82,8 @@
         </main>
     </div>
 </body>
+
+<!-- Sweet Alert -->
+@include('sweetalert::alert')
 
 </html>
