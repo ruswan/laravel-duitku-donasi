@@ -23,7 +23,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/donasi', [DonasiController::class, 'index']);
+Route::get('/campaign', [CampaignController::class, 'index'])->name('campaign.index');
 Route::get('/campaign/{campaign:slug}', [CampaignController::class, 'show'])->name('campaign.show');
 Route::post('/donasi/{campaign:slug}', [DonasiController::class, 'store'])->name('donasis.store');
 

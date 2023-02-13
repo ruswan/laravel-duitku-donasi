@@ -15,7 +15,8 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        //
+        $campaigns = Campaign::where('status', Campaign::CAMPAIGN_ACTIVE)->paginate(8);
+        return view('campaign.index', compact('campaigns'));
     }
 
     /**
