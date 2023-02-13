@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
 
-        <section class=" text-center">
+        <section>
             <div class="container my-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -11,8 +11,8 @@
                             <img class="card-img-top" src="{{ Storage::url('public/campaigns/default.png') }}"
                                 alt="{{ $campaign->name }}">
                             <div class="card-body">
-                                <h5 class="card-title">{{ Str::words($campaign->name, 6) }}</h5>
-                                <p class="card-text">{{ Str::words($campaign->description, 15) }}</p>
+                                <h5 class="card-title">{{ $campaign->name }}</h5>
+                                <p class="card-text">{{ $campaign->description }}</p>
                             </div>
                         </div>
 
