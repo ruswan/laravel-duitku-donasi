@@ -19,4 +19,10 @@ class Donasi extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
+
+
+    public function scopeAlredyPaid($query)
+    {
+        return $query->whereNotNull('method')->whereNotNull('paid');
+    }
 }

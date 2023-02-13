@@ -2,6 +2,10 @@
     height: 85px;
 }
 
+a:link {
+    text-decoration: none;
+}
+
 :root {
     --jumbotron-padding-y: 3rem;
 }

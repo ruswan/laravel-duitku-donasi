@@ -3,47 +3,69 @@
 @section('content')
     <div class="container">
 
-        <section class=" text-center">
+        <section>
             <div class="container my-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <div class="card">
+                        <div class="card mb-2">
                             <img class="card-img-top" src="{{ Storage::url('public/campaigns/default.png') }}"
                                 alt="{{ $campaign->name }}">
                             <div class="card-body">
-                                <h5 class="card-title">{{ Str::words($campaign->name, 6) }}</h5>
-                                <p class="card-text">{{ Str::words($campaign->description, 15) }}</p>
+                                <h3 class="card-title">{{ $campaign->name }}</h3>
+                                <h5>Terhimpun @currency($campaign->donasis->sum('paid'))</h5>
+                                <div class="mt-3 d-sm-block d-md-none">
+                                    <a href="#donation" class="btn btn-primary w-100 my-2 shadow">Donasi
+                                        Sekarang</a>
+                                </div>
+                                <hr />
+                                <p class="card-text">{{ $campaign->description }}</p>
+                            </div>
+                        </div>
+
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h4 class="card-title">Para Donatur</h4>
+                                <ul class="list-group">
+                                    @forelse ($campaign->donasis as $donatur)
+                                        <li class="list-group-item"><b>{{ $donatur->user_name }}</b>
+                                            {{ \Carbon\Carbon::parse($donatur->updated_at)->diffForHumans() }} berdonasi
+                                            sebesar
+                                            @currency($donatur->paid)
+
+                                        </li>
+                                    @empty
+                                        <li class="list-group-item">Belum ada donatur</li>
+                                    @endforelse
+                                </ul>
                             </div>
                         </div>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" id="donation">
                         <div class="card">
                             <div class="card-header">
-                                {{ $campaign->name }}
+                                Formulir Pengisian Donasi
                             </div>
                             <div class="card-body">
                                 <form method="POST">
                                     @csrf
-                                    <div class="mb-2">
-                                        <label>Jumlah</label>
+                                    <div class="mb-2 form-group">
+                                        <label for="amount">Nominal Donasi</label>
                                         <input required id="amount" min="10000" type="number" class="form-control"
                                             autofocus>
                                     </div>
 
-                                    <div class="mb-2">
+                                    <div class="mb-2 form-group">
                                         <label>Nama Lengkap</label>
-                                        <input required id="name" value="" type="text" class="form-control"
-                                            placeholder="Nama Lengkap">
+                                        <input required id="name" value="" type="text" class="form-control">
                                     </div>
 
-                                    <div class="mb-2">
-                                        <label>Email</label>
-                                        <input required id="email" value="" type="text" class="form-control"
-                                            placeholder="Email aktif untuk pemberitahuan">
+                                    <div class="mb-2 form-group">
+                                        <label>Email (Email aktif untuk pemberitahuan)</label>
+                                        <input required id="email" value="" type="text" class="form-control">
                                     </div>
 
-                                    <div class="mb-2">
+                                    <div class="mb-2 form-group">
                                         <label>Nomor Handphone/WA</label>
                                         <input required id="phoneNumber" value="" type="number" class="form-control">
                                     </div>
@@ -69,25 +91,41 @@
                 var paymentUi = "1";
 
                 if (amount < 10000) {
-                    alert("Minimal 10 ribu");
+                    Swal.fire(
+                        'Mohon maaf!',
+                        'Minimal donasi adalah Rp. 10.000,-',
+                        'error'
+                    )
                     $('#amount').focus();
                     return false;
                 }
 
                 if (name.length === 0) {
-                    alert("Kolom Nama Lengkap wajib diisi");
+                    Swal.fire(
+                        'Mohon maaf!',
+                        'Kolom Nama Lengkap wajib diisi',
+                        'error'
+                    )
                     $('#name').focus();
                     return false;
                 }
 
                 if (email.length === 0) {
-                    alert("Kolom Email wajib diisi");
+                    Swal.fire(
+                        'Mohon maaf!',
+                        'Kolom Email wajib diisi',
+                        'error'
+                    )
                     $('#email').focus();
                     return false;
                 }
 
                 if ((phoneNumber.length < 10) || phoneNumber.length > 13) {
-                    alert("Nomor handphone minimal 10 digit maksimal 13 digit");
+                    Swal.fire(
+                        'Mohon maaf!',
+                        'Nomor handphone minimal 10 digit maksimal 13 digit',
+                        'error'
+                    )
                     $('#phoneNumber').focus();
                     return false;
                 }
@@ -118,33 +156,38 @@
 
                         checkout.process(result.reference, {
                             successEvent: function(result) {
-                                // begin your code here
-                                console.log('success');
-                                console.log(result);
-                                alert('Payment Success');
+                                Swal.fire(
+                                    'Pembayaran Berhasil',
+                                    'Terimakasih, pembayar Anda berhasil, semoga menjadi amal jariyah.',
+                                    'success'
+                                )
                                 location.reload();
                             },
                             pendingEvent: function(result) {
-                                // begin your code here
-                                console.log('pending');
-                                console.log(result);
-                                alert('Payment Pending');
+                                Swal.fire(
+                                    'Pembayaran Pending',
+                                    'Maaf, pembayar Anda masih berstatus pending, silahkan lakukan pembayaran terlebih dahulu.',
+                                    'info'
+                                )
                                 location.reload();
                             },
                             errorEvent: function(result) {
-                                // begin your code here
-                                console.log('error');
-                                console.log(result);
-                                alert('Payment Error');
+                                Swal.fire(
+                                    'Pembayaran Gagal',
+                                    'Maaf, pembayar Anda gagal, silahkan diulangi kembali.',
+                                    'error'
+                                )
                                 location.reload();
                             },
                             closeEvent: function(result) {
-                                // begin your code here
-                                console.log(
-                                    'customer closed the popup without finishing the payment');
-                                console.log(result);
-                                alert('customer closed the popup without finishing the payment');
-                                location.reload();
+                                Swal.fire({
+                                    title: 'Donasi Gagal',
+                                    text: 'Maaf, sepertinya Anda menutup halaman sebelum menyelesaikan proses donasi.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                }).then((result) => {
+                                    location.reload();
+                                })
                             }
                         });
 
