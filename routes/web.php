@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CallbackController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DonasiController;
@@ -28,3 +29,9 @@ Route::get('/campaign/{campaign:slug}', [CampaignController::class, 'show'])->na
 Route::post('/donasi/{campaign:slug}', [DonasiController::class, 'store'])->name('donasis.store');
 
 Route::get('callback/return', [CallbackController::class, 'ReturnCallback']);
+
+/**
+ * socialite auth
+ */
+Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
+Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProvideCallback']);
