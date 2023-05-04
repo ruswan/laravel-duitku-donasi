@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('campaigns', function (Blueprint $table) {
-            $table->integer('status')->default(2)->change();
+            $table->dropColumn('status');
+            $table->foreignId('campaign_status_id')->references('id')->on('campaign_statuses')->constrained();
         });
     }
 
@@ -26,7 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('campaigns', function (Blueprint $table) {
-            $table->enum('status', ['0', '1', '2'])->default(0)->change();
+            $table->integer('status')->default(2)->change();
+            $table->dropColumn('campaign_status_id');
         });
     }
 };
