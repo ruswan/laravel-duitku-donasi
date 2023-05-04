@@ -29,9 +29,6 @@ class CampaignResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->required()
                     ->maxLength(65535),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('image')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('amount')
@@ -48,14 +45,13 @@ class CampaignResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('image'),
-                Tables\Columns\TextColumn::make('amount'),
                 Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -75,6 +71,7 @@ class CampaignResource extends Resource
         return [
             'index' => Pages\ListCampaigns::route('/'),
             'create' => Pages\CreateCampaign::route('/create'),
+            'view' => Pages\ViewCampaign::route('/{record}'),
             'edit' => Pages\EditCampaign::route('/{record}/edit'),
         ];
     }
