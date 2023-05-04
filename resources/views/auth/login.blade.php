@@ -78,11 +78,8 @@
                                     <a href="/auth/google" class="btn btn-primary btn-block">
                                         Login Google
                                     </a>
-                                    <br>
-
                                 </div>
-
-
+                            </div>
                         </form>
                     </div>
                 </div>

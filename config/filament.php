@@ -72,7 +72,7 @@ return [
     |
     */
 
-    'brand' => env('APP_NAME'),
+    'brand' => env('APP_SHORT_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -87,7 +87,7 @@ return [
     'auth' => [
         'guard' => env('FILAMENT_AUTH_GUARD', 'web'),
         'pages' => [
-            'login' => \Filament\Http\Livewire\Auth\Login::class,
+            'login' => App\Http\Controllers\Login::class,
         ],
     ],
 
