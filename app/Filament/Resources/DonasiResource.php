@@ -56,21 +56,11 @@ class DonasiResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('campaign_id'),
-                Tables\Columns\TextColumn::make('code'),
-                Tables\Columns\TextColumn::make('payment_url'),
-                Tables\Columns\TextColumn::make('method'),
                 Tables\Columns\TextColumn::make('user_name'),
                 Tables\Columns\TextColumn::make('user_email'),
                 Tables\Columns\TextColumn::make('user_phone'),
                 Tables\Columns\TextColumn::make('amount'),
                 Tables\Columns\TextColumn::make('paid'),
-                Tables\Columns\TextColumn::make('duitku_ref'),
-                Tables\Columns\TextColumn::make('expired_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
             ])
             ->filters([
                 //
@@ -83,14 +73,14 @@ class DonasiResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -99,5 +89,5 @@ class DonasiResource extends Resource
             'view' => Pages\ViewDonasi::route('/{record}'),
             'edit' => Pages\EditDonasi::route('/{record}/edit'),
         ];
-    }    
+    }
 }
