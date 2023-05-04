@@ -55,15 +55,14 @@ class DonasiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('campaign_id'),
-                Tables\Columns\TextColumn::make('user_name'),
-                Tables\Columns\TextColumn::make('user_email'),
-                Tables\Columns\TextColumn::make('user_phone'),
-                Tables\Columns\TextColumn::make('amount'),
-                Tables\Columns\TextColumn::make('paid'),
+                Tables\Columns\TextColumn::make('campaign.name')->label('Nama Kegiatan'),
+                Tables\Columns\TextColumn::make('user_name')->label('Nama Lengkap')->searchable(),
+                Tables\Columns\TextColumn::make('user_phone')->label('No. HP')->searchable(),
+                Tables\Columns\TextColumn::make('paid')->label('Jumlah Donasi Masuk'),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('Dibayarkan')
+                    ->query(fn (Builder $query): Builder => $query->whereNotNull('paid')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

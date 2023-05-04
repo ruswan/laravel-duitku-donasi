@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CampaignResource\Pages;
 use App\Filament\Resources\CampaignResource\RelationManagers;
+use App\Filament\Resources\CampaignResource\RelationManagers\DonasiRelationManager;
 use App\Models\Campaign;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -43,7 +44,7 @@ class CampaignResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('image'),
                 Tables\Columns\TextColumn::make('status'),
             ])
@@ -62,7 +63,7 @@ class CampaignResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DonasiRelationManager::class,
         ];
     }
 
