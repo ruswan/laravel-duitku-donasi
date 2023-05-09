@@ -70,8 +70,7 @@ class DonasiResource extends Resource
                 Tables\Columns\TextColumn::make('paid')->label('Jumlah Donasi Masuk'),
             ])
             ->filters([
-                Tables\Filters\Filter::make('Dibayarkan')
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('paid')),
+                //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
