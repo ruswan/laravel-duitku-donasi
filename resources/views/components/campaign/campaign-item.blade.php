@@ -3,7 +3,7 @@
 <div class="col-md-4 mb-4">
     <div class="card">
         <a href="{{ route('campaign.show', [$campaign->slug]) }}"><img class="card-img-top"
-                src="{{ Storage::url('public/campaigns/default.png') }}" alt="{{ $campaign->name }}"></a>
+                src="{{ Storage::url($campaign->image) }}" alt="{{ $campaign->name }}"></a>
         <div class="card-body">
             <h5 class="card-title"> <a
                     href="{{ route('campaign.show', [$campaign->slug]) }}">{{ Str::words($campaign->name, 6) }}</a>
