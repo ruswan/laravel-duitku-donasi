@@ -19,6 +19,11 @@ class DonasiResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->whereNotNull('paid');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

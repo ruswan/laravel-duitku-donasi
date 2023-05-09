@@ -6,11 +6,21 @@ use App\Filament\Resources\CampaignResource\Pages;
 use App\Filament\Resources\CampaignResource\RelationManagers;
 use App\Filament\Resources\CampaignResource\RelationManagers\DonasiRelationManager;
 use App\Models\Campaign;
+use App\Models\CampaignStatus;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -24,29 +34,59 @@ class CampaignResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->maxLength(65535),
-                Forms\Components\TextInput::make('image')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('amount')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('expired_at'),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
-            ]);
+
+                Card::make()
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Nama Kegiatan'),
+
+                        RichEditor::make('description')
+                            ->required()
+                            ->maxLength(65535)
+                            ->label('Deskripsi'),
+
+                        FileUpload::make('image')
+                            ->required()
+                            ->label('Cover'),
+                    ])
+                    ->columnSpan(2),
+
+                Card::make()
+                    ->schema([
+                        TextInput::make('amount')
+                            ->required()
+                            ->label('Target yang ditetapkan'),
+
+
+                        DatePicker::make('expired_at')
+                            ->label('Waktu Terakhir Penggalangan Dana'),
+
+                        Select::make('campaign_status_id')
+                            ->label('Status')
+                            ->options(CampaignStatus::all()
+                                ->pluck('name', 'id'))
+                            ->required(),
+                    ])
+                    ->columnSpan(1),
+
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('image'),
-                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->label('Nama Kegiatan'),
+
+                ImageColumn::make('image')
+                    ->label('Cover'),
+
+                Tables\Columns\TextColumn::make('campaignStatus.name')
+                    ->label('Status'),
             ])
             ->filters([
                 //

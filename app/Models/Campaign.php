@@ -26,4 +26,14 @@ class Campaign extends Model
     {
         return $this->hasMany(Donasi::class);
     }
+
+    /**
+     * Get the campaignStatus that owns the Campaign
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function campaignStatus()
+    {
+        return $this->belongsTo(CampaignStatus::class);
+    }
 }
