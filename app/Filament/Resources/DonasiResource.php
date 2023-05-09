@@ -25,7 +25,7 @@ class DonasiResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->whereNotNull('paid');
+        return parent::getEloquentQuery()->whereNotNull('method')->whereNotNull('paid');
     }
 
     public static function form(Form $form): Form

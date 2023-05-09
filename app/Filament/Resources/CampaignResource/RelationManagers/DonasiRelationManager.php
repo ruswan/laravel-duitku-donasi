@@ -59,6 +59,6 @@ class DonasiRelationManager extends RelationManager
 
     protected function getTableQuery(): Builder
     {
-        return parent::getTableQuery()->whereNotNull('paid');
+        return parent::getTableQuery()->whereNotNull('method')->whereNotNull('paid');
     }
 }
