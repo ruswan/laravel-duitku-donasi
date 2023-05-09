@@ -84,14 +84,24 @@ class CampaignResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
+                    ->sortable()
                     ->label('Nama Kegiatan'),
 
                 ImageColumn::make('image')
+                    ->square()
                     ->label('Cover'),
 
                 Tables\Columns\TextColumn::make('campaignStatus.name')
+                    ->sortable()
                     ->label('Status'),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->label('Dibuat Pada')
             ])
+            ->defaultSort('created_at', 'desc')
+
             ->filters([
                 //
             ])
