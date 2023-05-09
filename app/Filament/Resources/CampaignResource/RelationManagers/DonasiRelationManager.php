@@ -56,4 +56,9 @@ class DonasiRelationManager extends RelationManager
             ->actions([])
             ->bulkActions([]);
     }
+
+    protected function getTableQuery(): Builder
+    {
+        return parent::getTableQuery()->whereNotNull('paid');
+    }
 }

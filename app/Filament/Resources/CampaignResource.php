@@ -21,6 +21,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -82,7 +83,7 @@ class CampaignResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable()
                     ->sortable()
                     ->label('Nama Kegiatan'),
@@ -91,14 +92,15 @@ class CampaignResource extends Resource
                     ->square()
                     ->label('Cover'),
 
-                Tables\Columns\TextColumn::make('campaignStatus.name')
+                TextColumn::make('campaignStatus.name')
                     ->sortable()
                     ->label('Status'),
 
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->label('Dibuat Pada')
+                    ->label('Dibuat Pada'),
+
             ])
             ->defaultSort('created_at', 'desc')
 
