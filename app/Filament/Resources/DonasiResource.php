@@ -17,7 +17,11 @@ class DonasiResource extends Resource
 {
     protected static ?string $model = Donasi::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    protected static ?string $navigationLabel = 'Donatur';
+
+    protected static ?string $label = 'Donatur';
 
     public static function getEloquentQuery(): Builder
     {

@@ -28,7 +28,11 @@ class CampaignResource extends Resource
 {
     protected static ?string $model = Campaign::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-gift';
+
+    protected static ?string $navigationLabel = 'Kegiatan';
+
+    protected static ?string $label = 'Kegiatan';
 
     public static function form(Form $form): Form
     {
