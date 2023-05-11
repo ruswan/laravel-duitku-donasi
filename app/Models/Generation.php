@@ -10,4 +10,14 @@ class Generation extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    /**
+     * Get all of the donasis for the Generation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function donasis()
+    {
+        return $this->hasMany(Donasi::class);
+    }
 }

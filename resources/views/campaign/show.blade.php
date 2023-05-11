@@ -21,6 +21,21 @@
                             </div>
                         </div>
 
+                        @if ($donasiGenerations->count() > 0)
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <h4 class="card-title">Jumlah Donasi Per Angkatan</h4>
+                                    <ul class="list-group">
+                                        @forelse ($donasiGenerations as $donasiGeneration)
+                                            <li class="list-group-item"> {{ $donasiGeneration->name }} :
+                                                @currency($donasiGeneration->donasis->sum('paid')) </li>
+                                        @empty
+                                        @endforelse
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h4 class="card-title">Para Donatur</h4>
@@ -49,24 +64,34 @@
                                 <form method="POST">
                                     @csrf
                                     <div class="mb-2 form-group">
-                                        <label for="amount">Nominal Donasi</label>
+                                        <label for="amount">Nominal Donasi (Minimal Rp.10.000)*</label>
                                         <input required id="amount" min="10000" type="number" class="form-control"
                                             autofocus>
                                     </div>
 
                                     <div class="mb-2 form-group">
-                                        <label>Nama Lengkap</label>
+                                        <label>Nama Lengkap*</label>
                                         <input required id="name" value="" type="text" class="form-control">
                                     </div>
 
                                     <div class="mb-2 form-group">
-                                        <label>Email (Email aktif untuk pemberitahuan)</label>
+                                        <label>Email Aktif (Untuk pemberitahuan)*</label>
                                         <input required id="email" value="" type="text" class="form-control">
                                     </div>
 
                                     <div class="mb-2 form-group">
-                                        <label>Nomor Handphone/WA</label>
+                                        <label>Nomor Handphone/WA*</label>
                                         <input required id="phoneNumber" value="" type="number" class="form-control">
+                                    </div>
+
+                                    <div class="mb-2 form-group">
+                                        <label>Angkatan (Opsional)</label>
+                                        <select name="generationId" id="generationId" class="form-control">
+                                            <option value="">Pilih Angkatan</option>
+                                            @foreach ($generations as $generation)
+                                                <option value="{{ $generation->id }}">{{ $generation->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                     <button type="button" id="submit" class="btn btn-primary w-100 my-2 shadow"
@@ -87,6 +112,7 @@
                 var name = $('#name').val();
                 var email = $('#email').val();
                 var phoneNumber = $('#phoneNumber').val();
+                var generationId = $('#generationId').val();
                 var paymentUi = "1";
 
                 if (amount < 10000) {
@@ -140,6 +166,7 @@
                         name: name,
                         email: email,
                         phoneNumber: phoneNumber,
+                        generationId: generationId,
                         _token: "{{ csrf_token() }}",
                     },
                     url: '{{ route('donasis.store', [$campaign->slug]) }}',

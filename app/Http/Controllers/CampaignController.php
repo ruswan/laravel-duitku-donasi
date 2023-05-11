@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Campaign;
 use Illuminate\Http\Request;
 use Alert;
+use App\Models\Generation;
 
 class CampaignController extends Controller
 {
@@ -48,11 +49,23 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        $campaign = Campaign::with(['donasis' => function ($q) {
+        // data kegiatan beserta donasi yang sudah berhasil dibayar
+        $campaign = $campaign->with(['donasis' => function ($q) {
             $q->alredyPaid();
         }])->where('slug', $campaign->slug)->first();
 
-        return view('campaign.show', compact('campaign'));
+        // data seluruh angkatan
+        $generations = Generation::all();
+
+        // data seluruh angkatan diurutkan berdasarkan donasi terbanyak
+        $donasiGenerations = Generation::with('donasis')->whereRelation('donasis', 'campaign_id', $campaign->id)->get();
+
+        // urutkan berdasarkan donasi terbanyak
+        $donasiGenerations = $donasiGenerations->sortByDesc(function ($generation) {
+            return $generation->donasis->sum('paid');
+        });
+
+        return view('campaign.show', compact('campaign', 'generations', 'donasiGenerations'));
     }
 
     /**

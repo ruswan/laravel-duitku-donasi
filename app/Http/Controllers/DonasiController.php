@@ -119,6 +119,7 @@ class DonasiController extends Controller
                 'user_name' => $customerVaName,
                 'user_email' => $email,
                 'user_phone'    => $phoneNumber,
+                'generation_id' => $request->generationId,
                 'amount'    => $paymentAmount,
                 'duitku_ref' => $response->reference,
                 'payment_url' => $response->paymentUrl,
