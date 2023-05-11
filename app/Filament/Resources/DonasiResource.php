@@ -19,6 +19,8 @@ class DonasiResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
+    protected static ?string $navigationGroup = 'Penggalangan Dana';
+
     protected static ?string $navigationLabel = 'Donatur';
 
     protected static ?string $label = 'Donatur';

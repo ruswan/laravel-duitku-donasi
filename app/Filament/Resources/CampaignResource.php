@@ -31,6 +31,8 @@ class CampaignResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-gift';
 
+    protected static ?string $navigationGroup = 'Penggalangan Dana';
+
     protected static ?string $navigationLabel = 'Kegiatan';
 
     protected static ?string $label = 'Kegiatan';
