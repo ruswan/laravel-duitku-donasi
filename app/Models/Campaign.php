@@ -36,4 +36,9 @@ class Campaign extends Model
     {
         return $this->belongsTo(CampaignStatus::class);
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('campaign_status_id', self::CAMPAIGN_ACTIVE);
+    }
 }
