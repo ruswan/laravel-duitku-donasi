@@ -17,7 +17,7 @@
                                         Sekarang</a>
                                 </div>
                                 <hr />
-                                <p class="card-text">{{ $campaign->description }}</p>
+                                <p class="card-text">{!! $campaign->description !!}</p>
                             </div>
                         </div>
 

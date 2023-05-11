@@ -8,7 +8,7 @@
             <h5 class="card-title"> <a
                     href="{{ route('campaign.show', [$campaign->slug]) }}">{{ Str::words($campaign->name, 6) }}</a>
             </h5>
-            <p class="card-text">{{ Str::words($campaign->description, 15) }}</p>
+            <p class="card-text">{{ Str::words(strip_tags($campaign->description), 15) }}</p>
             <div class="text-center">
                 <a href="{{ route('campaign.show', [$campaign->slug]) }}" class="btn btn-primary">Ikut
                     Donasi</a>
