@@ -32,7 +32,8 @@ class GenerationResource extends Resource
                     [
                         Forms\Components\TextInput::make('name')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->label('Nama Angkatan'),
                     ]
                 )
             ]);
@@ -42,9 +43,12 @@ class GenerationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('id')
+                    ->label('ID Angkatan')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Angkatan')
+                    ->searchable(),
             ])
             ->filters([
                 //
