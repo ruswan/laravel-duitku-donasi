@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('campaigns', function (Blueprint $table) {
-            $table->integer('status')->default(2)->change();
+        Schema::create('campaign_statuses', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('campaigns', function (Blueprint $table) {
-            $table->enum('status', ['0', '1', '2'])->default(0)->change();
-        });
+        Schema::dropIfExists('campaign_statuses');
     }
 };

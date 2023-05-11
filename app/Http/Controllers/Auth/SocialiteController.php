@@ -7,6 +7,7 @@ use App\Models\SocialAccount;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use Filament\Notifications\Notification;
 
 class SocialiteController extends Controller
 {
@@ -25,6 +26,14 @@ class SocialiteController extends Controller
         }
         // find or create user and send params user get from socialite and provider
         $authUser = $this->findOrCreateUser($user, $provider);
+
+        if (!$authUser) {
+            Notification::make()
+                ->title('Akun tidak ditemukan')
+                ->danger()
+                ->send();
+            return redirect()->route('filament.auth.login');
+        }
 
         // login user
         Auth()->login($authUser, true);
@@ -53,18 +62,8 @@ class SocialiteController extends Controller
 
             // Jika Tidak ada user
             if (!$user) {
-                // Create user baru
-                $user = User::create([
-                    'name'  => $socialUser->getName(),
-                    'email' => $socialUser->getEmail()
-                ]);
+                return false;
             }
-
-            // Buat Social Account baru
-            $user->socialAccounts()->create([
-                'provider_id'   => $socialUser->getId(),
-                'provider_name' => $provider
-            ]);
 
             // return user
             return $user;

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Campaign;
+use App\Models\CampaignStatus;
 use Illuminate\Http\Request;
-use Alert;
 
-class CampaignController extends Controller
+class CampaignStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::active()->paginate(8);
-        return view('campaign.index', compact('campaigns'));
+        //
     }
 
     /**
@@ -43,25 +41,21 @@ class CampaignController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Campaign  $campaign
+     * @param  \App\Models\CampaignStatus  $campaignStatus
      * @return \Illuminate\Http\Response
      */
-    public function show(Campaign $campaign)
+    public function show(CampaignStatus $campaignStatus)
     {
-        $campaign = Campaign::with(['donasis' => function ($q) {
-            $q->alredyPaid();
-        }])->where('slug', $campaign->slug)->first();
-
-        return view('campaign.show', compact('campaign'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Campaign  $campaign
+     * @param  \App\Models\CampaignStatus  $campaignStatus
      * @return \Illuminate\Http\Response
      */
-    public function edit(Campaign $campaign)
+    public function edit(CampaignStatus $campaignStatus)
     {
         //
     }
@@ -70,10 +64,10 @@ class CampaignController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Campaign  $campaign
+     * @param  \App\Models\CampaignStatus  $campaignStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Campaign $campaign)
+    public function update(Request $request, CampaignStatus $campaignStatus)
     {
         //
     }
@@ -81,10 +75,10 @@ class CampaignController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Campaign  $campaign
+     * @param  \App\Models\CampaignStatus  $campaignStatus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Campaign $campaign)
+    public function destroy(CampaignStatus $campaignStatus)
     {
         //
     }

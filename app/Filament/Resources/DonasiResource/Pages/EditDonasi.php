@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\CampaignResource\Pages;
+namespace App\Filament\Resources\DonasiResource\Pages;
 
-use App\Filament\Resources\CampaignResource;
+use App\Filament\Resources\DonasiResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditCampaign extends EditRecord
+class EditDonasi extends EditRecord
 {
-    protected static string $resource = CampaignResource::class;
+    protected static string $resource = DonasiResource::class;
 
     protected function getActions(): array
     {

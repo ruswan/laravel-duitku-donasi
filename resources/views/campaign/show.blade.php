@@ -8,8 +8,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card mb-2">
-                            <img class="card-img-top" src="{{ Storage::url('public/campaigns/default.png') }}"
-                                alt="{{ $campaign->name }}">
+                            <img class="card-img-top" src="{{ Storage::url($campaign->image) }}" alt="{{ $campaign->name }}">
                             <div class="card-body">
                                 <h3 class="card-title">{{ $campaign->name }}</h3>
                                 <h5>Terhimpun @currency($campaign->donasis->sum('paid'))</h5>
@@ -18,7 +17,7 @@
                                         Sekarang</a>
                                 </div>
                                 <hr />
-                                <p class="card-text">{{ $campaign->description }}</p>
+                                <p class="card-text">{!! $campaign->description !!}</p>
                             </div>
                         </div>
 
